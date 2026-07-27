@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serenia — Jurnal Harianmu 🌊</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- OFFLINE BANNER — muncul otomatis saat koneksi hilang -->
+<div id="offline-banner" role="status" aria-live="polite" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#8A5A10;color:#fff;text-align:center;font-size:0.78rem;padding:0.45rem 0.6rem;font-family:'Nunito',sans-serif;font-weight:700;">
+  📡 Kamu sedang offline — perubahan tetap tersimpan di HP dan akan disinkronkan otomatis saat online lagi
+</div>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="loading-logo">🌿</div>
+  <div class="loading-text">Serenia</div>
+  <div class="loading-tagline">Find your serene.</div>
+  <div class="loading-dots">
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+  </div>
+</div>
+
+<!-- FLOATING BUBBLES -->
+<div class="bubbles-bg" id="bubbles"></div>
+
+<!-- CLOUD DRIFT LAYER -->
+<div class="cloud-drift" id="cloud-drift">
+  <div class="cloud" style="width:200px;height:60px;top:8%;animation-duration:55s;animation-delay:0s;opacity:0.45;"></div>
+  <div class="cloud" style="width:140px;height:45px;top:22%;animation-duration:70s;animation-delay:-20s;opacity:0.32;"></div>
+  <div class="cloud" style="width:180px;height:55px;top:5%;animation-duration:80s;animation-delay:-40s;opacity:0.38;"></div>
+  <div class="cloud" style="width:100px;height:35px;top:35%;animation-duration:60s;animation-delay:-10s;opacity:0.25;"></div>
+</div>
+
+<!-- NATURE MOUNTAIN SCENE — Realistic Alpine Landscape -->
+<svg class="nature-scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <!-- Sky gradient: dawn blue to soft gold horizon -->
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#C8E0F0" stop-opacity="0.0"/>
+      <stop offset="60%"  stop-color="#D8EAF5" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#E8F4F8" stop-opacity="0.35"/>
+    </linearGradient>
+    <!-- Far mountain gradient: cold blue-grey with haze -->
+    <linearGradient id="farMtnGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#A0C4DC" stop-opacity="0.55"/>
+      <stop offset="55%"  stop-color="#90B4CC" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#80A4C0" stop-opacity="0.30"/>
+    </linearGradient>
+    <!-- Mid mountain: slightly greener foothills -->
+    <linearGradient id="midMtnGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#88A890" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#78987E" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#6A8A70" stop-opacity="0.25"/>
+    </linearGradient>
+    <!-- Meadow: warm green -->
+    <linearGradient id="meadowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#96B878" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#8AAE68" stop-opacity="0.18"/>
+    </linearGradient>
+    <!-- Lake: reflective blue shimmer -->
+    <linearGradient id="lakeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#A8C8E8" stop-opacity="0.48"/>
+      <stop offset="50%" stop-color="#B8D8F0" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#A0C0E0" stop-opacity="0.25"/>
+    </linearGradient>
+    <!-- Snow caps -->
+    <radialGradient id="snowGrad1" cx="50%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Mist -->
+    <linearGradient id="mistGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#F5F2EE" stop-opacity="0"/>
+      <stop offset="70%" stop-color="#F5F2EE" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#F5F2EE" stop-opacity="0.55"/>
+    </linearGradient>
+    <!-- Tree silhouette -->
+    <linearGradient id="treeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#4A7050" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#3A6040" stop-opacity="0.30"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky wash -->
+  <rect x="0" y="0" width="1440" height="600" fill="url(#skyGrad)"/>
+
+  <!-- Far mountains — tall, jagged alpine peaks with atmosphere -->
+  <path d="M0 600 L0 280
+    L 60 220 L 100 250 L 140 180 L 200 230 L 260 130 L 310 200
+    L 360  90 L 420 175 L 480  70 L 530 160 L 590  50 L 640 140
+    L 700  80 L 760 150 L 820  55 L 870 140 L 930  95 L 990 160
+    L1050  75 L1100 155 L1160 100 L1220 165 L1280 115 L1340 170
+    L1380 140 L1440 185 L1440 600 Z"
+    fill="url(#farMtnGrad)"/>
+
+  <!-- Snow caps — scattered white radial glows on peaks -->
+  <ellipse cx="360"  cy="112" rx="38" ry="22" fill="white" opacity="0.28"/>
+  <ellipse cx="480"  cy="90"  rx="44" ry="25" fill="white" opacity="0.32"/>
+  <ellipse cx="590"  cy="72"  rx="50" ry="28" fill="white" opacity="0.30"/>
+  <ellipse cx="700"  cy="100" rx="40" ry="22" fill="white" opacity="0.26"/>
+  <ellipse cx="820"  cy="75"  rx="48" ry="26" fill="white" opacity="0.28"/>
+  <ellipse cx="930"  cy="115" rx="36" ry="20" fill="white" opacity="0.24"/>
+  <ellipse cx="1050" cy="96"  rx="42" ry="23" fill="white" opacity="0.26"/>
+
+  <!-- Atmosphere haze behind mid-mountains -->
+  <path d="M0 600 L0 330 Q360 290 720 310 Q1080 330 1440 305 L1440 600 Z"
+    fill="rgba(200,225,245,0.12)"/>
+
+  <!-- Mid-range forested hills -->
+  <path d="M0 600 L0 370
+    L 90 320 L 180 355 L 270 295 L 380 340 L 480 280 L 570 330
+    L 660 270 L 750 320 L 840 275 L 940 335 L1040 285 L1140 340
+    L1240 295 L1340 340 L1440 315 L1440 600 Z"
+    fill="url(#midMtnGrad)"/>
+
+  <!-- Conifer tree line — small triangles along the hill ridge -->
+  <!-- Left cluster -->
+  <polygon points="55,342  65,310  75,342"  fill="url(#treeGrad)"/>
+  <polygon points="68,345  80,308  92,345"  fill="url(#treeGrad)"/>
+  <polygon points="85,348  97,312 109,348"  fill="url(#treeGrad)"/>
+  <!-- Mid-left -->
+  <polygon points="340,318 352,284 364,318" fill="url(#treeGrad)"/>
+  <polygon points="358,322 370,286 382,322" fill="url(#treeGrad)"/>
+  <polygon points="375,320 387,285 399,320" fill="url(#treeGrad)"/>
+  <!-- Centre -->
+  <polygon points="660,295 674,258 688,295" fill="url(#treeGrad)"/>
+  <polygon points="678,298 692,260 706,298" fill="url(#treeGrad)"/>
+  <polygon points="698,296 712,260 726,296" fill="url(#treeGrad)"/>
+  <!-- Right -->
+  <polygon points="1060,305 1074,268 1088,305" fill="url(#treeGrad)"/>
+  <polygon points="1080,308 1094,270 1108,308" fill="url(#treeGrad)"/>
+  <polygon points="1100,306 1114,268 1128,306" fill="url(#treeGrad)"/>
+
+  <!-- Lake — elliptical alpine lake in the valley floor -->
+  <ellipse cx="720" cy="490" rx="420" ry="58"
+    fill="url(#lakeGrad)"/>
+  <!-- Lake shimmer highlight lines -->
+  <ellipse cx="680" cy="482" rx="180" ry="12"
+    fill="rgba(255,255,255,0.18)"/>
+  <ellipse cx="760" cy="498" rx="120" ry="8"
+    fill="rgba(255,255,255,0.14)"/>
+  <!-- Mountain reflection in lake — soft, inverted -->
+  <path d="M300 540 Q480 510 720 520 Q960 530 1140 540 L1140 560 Q960 550 720 545 Q480 540 300 555 Z"
+    fill="rgba(160,196,220,0.22)"/>
+
+  <!-- Meadow floor — rolling green -->
+  <path d="M0 600 L0 440
+    Q200 410 400 430 Q600 450 720 435 Q900 418 1100 440 Q1280 458 1440 438 L1440 600 Z"
+    fill="url(#meadowGrad)"/>
+
+  <!-- Wildflower specks in the meadow -->
+  <!-- Pink flowers -->
+  <circle cx="160" cy="500" r="3" fill="rgba(196,136,154,0.38)"/>
+  <circle cx="210" cy="515" r="2.5" fill="rgba(196,136,154,0.30)"/>
+  <circle cx="280" cy="496" r="3.5" fill="rgba(196,136,154,0.35)"/>
+  <circle cx="420" cy="508" r="3" fill="rgba(196,136,154,0.28)"/>
+  <circle cx="510" cy="495" r="2.5" fill="rgba(196,136,154,0.32)"/>
+  <!-- Yellow flowers -->
+  <circle cx="320" cy="510" r="3" fill="rgba(212,168,75,0.40)"/>
+  <circle cx="380" cy="520" r="2.5" fill="rgba(212,168,75,0.32)"/>
+  <circle cx="590" cy="505" r="3" fill="rgba(212,168,75,0.35)"/>
+  <circle cx="850" cy="498" r="3" fill="rgba(212,168,75,0.38)"/>
+  <circle cx="920" cy="512" r="2.5" fill="rgba(212,168,75,0.30)"/>
+  <!-- White flowers -->
+  <circle cx="240" cy="504" r="2.5" fill="rgba(255,255,255,0.48)"/>
+  <circle cx="660" cy="510" r="3"   fill="rgba(255,255,255,0.42)"/>
+  <circle cx="780" cy="502" r="2.5" fill="rgba(255,255,255,0.45)"/>
+  <circle cx="1050" cy="506" r="3"  fill="rgba(255,255,255,0.40)"/>
+  <circle cx="1150" cy="518" r="2.5" fill="rgba(255,255,255,0.38)"/>
+  <!-- More scattered -->
+  <circle cx="110" cy="520" r="2"  fill="rgba(196,136,154,0.25)"/>
+  <circle cx="740" cy="516" r="2"  fill="rgba(212,168,75,0.28)"/>
+  <circle cx="1220" cy="504" r="2.5" fill="rgba(196,136,154,0.30)"/>
+  <circle cx="1320" cy="514" r="3"   fill="rgba(212,168,75,0.35)"/>
+  <circle cx="1380" cy="498" r="2.5" fill="rgba(255,255,255,0.38)"/>
+
+  <!-- Atmospheric mist / ground haze -->
+  <path d="M0 560 Q360 548 720 555 Q1080 562 1440 550 L1440 600 L0 600 Z"
+    fill="url(#mistGrad)"/>
+
+  <!-- Watercolour paper texture vignette at very bottom -->
+  <rect x="0" y="540" width="1440" height="60"
+    fill="rgba(245,242,238,0.38)"/>
+</svg>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CELEBRATION OVERLAY -->
+<div class="celebration-overlay" id="celebration-overlay">
+  <div class="celebration-toast" id="celebration-toast">
+    <span class="cel-icon" id="cel-icon">🏆</span>
+    <h2 id="cel-title">Achievement Unlocked!</h2>
+    <p id="cel-desc">Selamat! Kamu luar biasa!</p>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="entry-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Tutup">✕</button>
+    <div class="modal-title" id="modal-title">📖 Entri Jurnal</div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- =================== AUTH SCREEN =================== -->
+<div id="auth-screen" class="screen active">
+  <div class="auth-deco auth-deco-1"></div>
+  <div class="auth-deco auth-deco-2"></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-wave">🌿</span>
+      <h1>Serenia</h1>
+      <p class="auth-tagline">Find your serene. ✨</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login', event)">Masuk</button>
+      <button class="auth-tab" onclick="switchAuthTab('register', event)">Daftar</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-form">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="kamu@email.com" onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="login-pass">Kata Sandi</label>
+        <input class="form-input" type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <div style="text-align:right;margin:-0.6rem 0 1rem;">
+        <a href="javascript:void(0)" id="forgot-pass-link" onclick="doForgotPassword()" style="font-size:0.8rem;color:var(--ocean);text-decoration:underline;">Lupa kata sandi?</a>
+      </div>
+      <button class="btn-primary" id="login-submit-btn" onclick="doLogin()">Masuk ke Jurnal ✨</button>
+      <div class="auth-divider">atau</div>
+      <button class="btn-google" id="login-google-btn" onclick="doGoogleLogin(this.id)">
+        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Masuk dengan Google
+      </button>
+      <div class="auth-divider">atau coba sebagai tamu</div>
+      <button class="btn-guest" onclick="guestLogin()">🐾 Lanjutkan sebagai Tamu</button>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="register-form" style="display:none;">
+      <div class="form-group">
+        <label class="form-label" for="reg-name">Nama Panggilan</label>
+        <input class="form-input" type="text" id="reg-name" placeholder="Nama kamu...">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-email">Email</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="kamu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-pass">Kata Sandi</label>
+        <input class="form-input" type="password" id="reg-pass" placeholder="Minimal 6 karakter" onkeydown="if(event.key==='Enter') doRegister()">
+      </div>
+      <button class="btn-primary" id="register-submit-btn" onclick="doRegister()">Mulai Perjalanan 🚀</button>
+      <div class="auth-divider">atau</div>
+      <button class="btn-google" id="register-google-btn" onclick="doGoogleLogin(this.id)">
+        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Daftar dengan Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== MAIN APP =================== -->
+<div id="app-screen" class="screen">
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <span class="nav-brand-wave">🌊</span> Serenia
+    </div>
+    <div class="nav-right">
+      <div class="nav-streak-badge" id="nav-streak-badge">🔥 <span id="nav-streak-num">0</span></div>
+      <div class="nav-greeting" id="nav-greeting">Hai!</div>
+      <div class="nav-avatar" id="nav-avatar" onclick="goToPage('settings')">?</div>
+    </div>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="hero-banner" id="hero-quote">
+      <div class="hero-mist"></div>
+      <div class="hero-snow"></div>
+      <div class="hero-botanical">🌸 🌼 🌿</div>
+      <div class="hero-greeting">
+        <span class="hero-greeting-name" id="hero-greeting-name">Halo! 🌿</span>
+      </div>
+      <div class="quote-text">"Setiap hari adalah halaman baru dalam kisah hidupmu. Mulailah menulis yang indah! 🌟"</div>
+      <div class="quote-author">— Serenia Daily</div>
+    </div>
+
+    <div class="quick-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-entries">0</div>
+        <div class="stat-label">Entri Jurnal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-streak">0🔥</div>
+        <div class="stat-label">Hari Berturut</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-mood-emoji">—</div>
+        <div class="stat-label">Mood Hari Ini</div>
+      </div>
+    </div>
+
+    <div id="home-cycle-card" style="display:none;"></div>
+
+    <!-- NEXT ACHIEVEMENT PROGRESS -->
+    <div class="progress-section">
+      <div class="card-title">🏆 Pencapaian Berikutnya</div>
+      <div class="next-achievement-label">Menuju:</div>
+      <div class="next-achievement-name" id="next-ach-name">—</div>
+      <div class="main-progress-bar">
+        <div class="main-progress-fill" id="next-ach-bar" style="width:0%"></div>
+      </div>
+      <div class="main-progress-text" id="next-ach-text">—</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌤️ Bagaimana perasaanmu hari ini?</div>
+      <div class="mood-grid" id="home-mood-grid">
+        <button class="mood-btn" onclick="selectMoodHome('😄','Senang')" data-mood="😄"><span class="mood-em">😄</span><span class="mood-name">Senang</span></button>
+        <button class="mood-btn" onclick="selectMoodHome('😌','Tenang')" data-mood="😌"><span class="mood-em">😌</span><span class="mood-name">Tenang</span></button>
+        <button class="mood-btn" onclick="selectMoodHome('😐','Biasa')" data-mood="😐"><span class="mood-em">😐</span><span class="mood-name">Biasa</span></button>
+        <button class="mood-btn" onclick="selectMoodHome('😔','Sedih')" data-mood="😔"><span class="mood-em">😔</span><span class="mood-name">Sedih</span></button>
+        <button class="mood-btn" onclick="selectMoodHome('😤','Kesal')" data-mood="😤"><span class="mood-em">😤</span><span class="mood-name">Kesal</span></button>
+      </div>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--sky);">
+      <div class="card-title">✍️ Mulai Jurnal Hari Ini</div>
+      <textarea class="journal-editor" id="home-quick-journal" placeholder="Ceritakan harimu di sini... apa yang paling berkesan hari ini?" style="min-height:110px;"></textarea>
+      <button class="btn-primary" style="margin-top:0.65rem;" onclick="saveQuickEntry()">Simpan Entri 💾</button>
+    </div>
+
+    <div class="card refl-entry-card" onclick="goToPage('refleksi')" role="button" tabindex="0" aria-label="Buka Refleksi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToPage('refleksi')}">
+      <div class="card-title">🌿 Refleksi</div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0;">Cermin dari catatanmu sendiri — tanpa nasihat, hanya memperlihatkan.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🐾 Temanmu Hari Ini</div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <div style="font-size:3.2rem;cursor:pointer;transition:var(--transition);" onclick="goToPage('pet')" id="home-pet-display" onmouseover="this.style.transform='scale(1.1) rotate(-5deg)'" onmouseout="this.style.transform='scale(1)'">🐱</div>
+        <div>
+          <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;color:var(--deep);" id="home-pet-name">Mochi si Kucing</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px;" id="home-pet-speech">Aku siap menemanimu hari ini! 🌟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLEKSI PAGE -->
+  <div class="page" id="page-refleksi">
+    <div class="page-title">🌿 Refleksi</div>
+    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:-0.8rem;margin-bottom:1rem;">Cermin tidak memberi nasihat. Cermin hanya memperlihatkan dirimu.</p>
+
+    <div class="refl-tabs">
+      <button class="refl-tab active" id="refl-tab-weekly" onclick="switchReflTab('weekly')">Mingguan</button>
+      <button class="refl-tab" id="refl-tab-monthly" onclick="switchReflTab('monthly')">Bulanan</button>
+      <button class="refl-tab" id="refl-tab-timeline" onclick="switchReflTab('timeline')">Timeline</button>
+      <button class="refl-tab" id="refl-tab-letter" onclick="switchReflTab('letter')">Surat</button>
+    </div>
+
+    <div class="refl-tab-content active" id="refl-panel-weekly">
+      <div class="card">
+        <div class="card-title">🌿 Refleksi Mingguan</div>
+        <div id="refl-weekly-content"></div>
+      </div>
+    </div>
+
+    <div class="refl-tab-content" id="refl-panel-monthly">
+      <div class="card">
+        <div class="card-title">📊 Emosi Bulan Ini</div>
+        <div id="refl-monthly-content"></div>
+      </div>
+    </div>
+
+    <div class="refl-tab-content" id="refl-panel-timeline">
+      <div class="card">
+        <div class="card-title">📅 Timeline Perjalanan</div>
+        <div id="refl-timeline-content"></div>
+      </div>
+    </div>
+
+    <div class="refl-tab-content" id="refl-panel-letter">
+      <div id="refl-letter-content"></div>
+    </div>
+  </div>
+
+  <!-- MOOD PAGE -->
+  <div class="page" id="page-mood">
+    <div class="page-title">🌈 Pelacak Mood</div>
+
+    <div class="streak-banner" id="mood-streak-banner">
+      <div class="streak-icon">🔥</div>
+      <div class="streak-text">
+        <h4>Streak: <span id="mood-streak-num">0</span> hari berturut!</h4>
+        <p>Terus catat moodmu setiap hari ya! 💪</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">☀️ Pilih mood hari ini</div>
+      <div class="mood-grid" id="mood-main-grid">
+        <button class="mood-btn" onclick="selectMoodMain('😄','Senang')" data-mood="😄"><span class="mood-em">😄</span><span class="mood-name">Senang</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('😌','Tenang')" data-mood="😌"><span class="mood-em">😌</span><span class="mood-name">Tenang</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('😐','Biasa')" data-mood="😐"><span class="mood-em">😐</span><span class="mood-name">Biasa</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('😔','Sedih')" data-mood="😔"><span class="mood-em">😔</span><span class="mood-name">Sedih</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('😤','Kesal')" data-mood="😤"><span class="mood-em">😤</span><span class="mood-name">Kesal</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('🤩','Excited')" data-mood="🤩"><span class="mood-em">🤩</span><span class="mood-name">Excited</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('😰','Cemas')" data-mood="😰"><span class="mood-em">😰</span><span class="mood-name">Cemas</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('🥱','Lelah')" data-mood="🥱"><span class="mood-em">🥱</span><span class="mood-name">Lelah</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('🤗','Hangat')" data-mood="🤗"><span class="mood-em">🤗</span><span class="mood-name">Hangat</span></button>
+        <button class="mood-btn" onclick="selectMoodMain('🫤','Bingung')" data-mood="🫤"><span class="mood-em">🫤</span><span class="mood-name">Bingung</span></button>
+      </div>
+      <button class="btn-primary" style="margin-top:0.85rem;" onclick="saveMood()">Catat Mood 🎯</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 Mood 7 Hari Terakhir</div>
+      <div class="mood-week" id="mood-week-display"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Statistik Mood</div>
+      <div id="mood-stats-display"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔍 Insight Kamu</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.85rem;">Pola-pola yang ketemu dari catatan kamu sejauh ini</p>
+      <div id="insight-display"></div>
+    </div>
+  </div>
+
+  <!-- JOURNAL PAGE -->
+  <div class="page" id="page-journal">
+    <div class="page-title">📖 Jurnal Harian</div>
+
+    <div class="card">
+      <div class="card-title">✨ Entri Baru — <span id="journal-today-date" style="font-weight:600;font-size:0.88rem;color:var(--text-muted);"></span></div>
+      <div class="journal-toolbar">
+        <button class="toolbar-btn" onclick="insertText('✨ ')" aria-label="Sisipkan ikon sparkle">✨</button>
+        <button class="toolbar-btn" onclick="insertText('💭 Perasaan: ')" aria-label="Sisipkan bagian Perasaan">💭</button>
+        <button class="toolbar-btn" onclick="insertText('🙏 Syukur: ')" aria-label="Sisipkan bagian Syukur">🙏</button>
+        <button class="toolbar-btn" onclick="insertText('🎯 Target: ')" aria-label="Sisipkan bagian Target">🎯</button>
+        <button class="toolbar-btn" onclick="insertText('💡 Belajar: ')" aria-label="Sisipkan bagian Belajar">💡</button>
+        <button class="toolbar-btn" onclick="insertText('🌟 Pencapaian: ')" aria-label="Sisipkan bagian Pencapaian">🌟</button>
+      </div>
+      <div class="tag-input-area">
+        <div class="tags-display" id="entry-tags-display"></div>
+        <input class="tag-input-box" id="tag-input" placeholder="+ Tambah tag..." onkeydown="addTag(event)">
+      </div>
+      <textarea class="journal-editor" id="main-journal-editor" placeholder="Tuangkan pikiranmu di sini...
+
+Kamu bisa menceritakan:
+• Hal terbaik yang terjadi hari ini
+• Tantangan yang kamu hadapi
+• Apa yang kamu syukuri
+• Apa yang ingin kamu capai besok" maxlength="10000" oninput="updateJournalCharCount()"></textarea>
+      <div id="journal-char-count" style="font-size:0.72rem;color:var(--text-muted);text-align:right;margin-top:0.25rem;">0 / 10.000 karakter</div>
+      <div style="display:flex;gap:0.65rem;margin-top:0.75rem;flex-wrap:wrap;">
+        <button class="btn-action btn-ocean" onclick="saveJournalEntry()">💾 Simpan Entri</button>
+        <button class="btn-action btn-sky" onclick="getRandomPrompt()">✨ Prompt Hari Ini</button>
+        <button class="btn-action btn-sky" onclick="clearJournalEditor()">🗑️ Hapus Draft</button>
+      </div>
+    </div>
+
+    <div class="journal-entries">
+      <div class="card-title" style="margin-bottom:0.75rem;">📚 Entri Tersimpan</div>
+      <div id="entries-list"></div>
+    </div>
+  </div>
+
+  <!-- CALENDAR PAGE -->
+  <div class="page" id="page-calendar">
+    <div class="page-title">📅 Kalender Serenia</div>
+
+    <div class="card">
+      <div class="calendar-header">
+        <button class="cal-nav" onclick="calNavigate(-1)">◀</button>
+        <div class="cal-month" id="cal-month-year"></div>
+        <button class="cal-nav" onclick="calNavigate(1)">▶</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <div class="card" id="cal-selected-info" style="display:none;">
+      <div class="modal-title" id="cal-selected-date"></div>
+      <div id="cal-selected-content"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Aktivitas Bulan Ini</div>
+      <div id="cal-month-stats"></div>
+    </div>
+  </div>
+
+  <!-- PET PAGE -->
+  <div class="page" id="page-pet">
+    <div class="page-title">🐾 Teman Berbuluku</div>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Pilih teman setiamu! Mereka menemanimu setiap langkah 💕</p>
+
+    <div class="pet-selector">
+      <button class="pet-choice active" onclick="selectPet('cat')" id="pet-btn-cat">
+        <span class="pet-em">🐱</span>Kucing
+      </button>
+      <button class="pet-choice" onclick="selectPet('rabbit')" id="pet-btn-rabbit">
+        <span class="pet-em">🐰</span>Kelinci
+      </button>
+      <button class="pet-choice" onclick="selectPet('dog')" id="pet-btn-dog">
+        <span class="pet-em">🐶</span>Anjing
+      </button>
+      <button class="pet-choice" onclick="selectPet('fox')" id="pet-btn-fox">
+        <span class="pet-em">🦊</span>Rubah
+      </button>
+      <button class="pet-choice" onclick="selectPet('hamster')" id="pet-btn-hamster">
+        <span class="pet-em">🐹</span>Hamster
+      </button>
+    </div>
+
+    <div class="pet-stage">
+      <div class="pet-display" id="pet-main-display" onclick="petInteract()">🐱</div>
+      <div class="pet-name" id="pet-main-name">Mochi</div>
+      <div class="pet-speech" id="pet-speech-bubble">Hei! Aku senang kamu ada di sini! 🌟</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎮 Aktivitas Bersama</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
+        <button class="btn-action btn-sky" onclick="petActivity('feed')">🍎 Beri Makan</button>
+        <button class="btn-action btn-sky" onclick="petActivity('play')">🎾 Ajak Bermain</button>
+        <button class="btn-action btn-sky" onclick="petActivity('study')">📚 Belajar Bersama</button>
+        <button class="btn-action btn-sky" onclick="petActivity('sleep')">😴 Istirahat</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💬 Kata Motivasi</div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.75rem;">Temanmu akan memberikan kata-kata semangat untukmu!</p>
+      <button class="btn-action btn-ocean" onclick="getPetWisdom()">✨ Minta Motivasi</button>
+      <div id="pet-wisdom-box" style="margin-top:0.85rem;display:none;"></div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS PAGE -->
+  <div class="page" id="page-achievements">
+    <div class="page-title">🏆 Pencapaian</div>
+
+    <div class="card" style="background:linear-gradient(135deg,var(--sun-light),white);border-color:var(--sun);">
+      <div class="card-title">🔥 Streak Jurnal</div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <div style="font-size:3.5rem;font-family:'Nunito',sans-serif;font-weight:900;color:var(--ocean);" id="ach-streak-big">0</div>
+        <div>
+          <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;color:var(--deep);">Hari Berturut-turut</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px;" id="ach-streak-msg">Mulai berjurnal hari ini!</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+        <div id="streak-progress-bar" style="height:100%;border-radius:4px;background:linear-gradient(90deg,var(--sun),var(--peach));transition:width 1s ease;width:0%;"></div>
+      </div>
+      <div id="streak-progress-label" style="font-size:0.72rem;color:var(--text-muted);margin-top:0.4rem;"></div>
+    </div>
+
+    <div class="card-title" style="margin-bottom:0.75rem;">🥇 Lencana Pencapaian</div>
+    <div class="achievements-grid" id="achievements-grid"></div>
+  </div>
+
+  <!-- SETTINGS PAGE -->
+  <div class="page" id="page-settings">
+    <div class="page-title">⚙️ Pengaturan</div>
+
+    <div class="profile-header" id="settings-profile-header">
+      <div class="profile-avatar-large" id="settings-avatar-large">?</div>
+      <div class="profile-name" id="settings-profile-name">Pengguna</div>
+      <div class="profile-email" id="settings-profile-email">—</div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Akun</div>
+      <div class="settings-item" onclick="showToast('📊 Total entri: ' + appState.entries.length + ' | Mood: ' + appState.moods.length)">
+        <div class="settings-item-left">
+          <span class="settings-icon">📊</span>
+          <div>
+            <div class="settings-label">Statistik Saya</div>
+            <div class="settings-sub" id="settings-stats-sub">Lihat ringkasan aktivitas</div>
+          </div>
+        </div>
+        <span class="settings-arrow">›</span>
+      </div>
+      <div class="settings-item" onclick="exportData()">
+        <div class="settings-item-left">
+          <span class="settings-icon">📤</span>
+          <div>
+            <div class="settings-label">Ekspor Data</div>
+            <div class="settings-sub">Unduh jurnal sebagai JSON</div>
+          </div>
+        </div>
+        <span class="settings-arrow">›</span>
+      </div>
+      <div class="settings-item" onclick="document.getElementById('import-file-input').click()">
+        <div class="settings-item-left">
+          <span class="settings-icon">📥</span>
+          <div>
+            <div class="settings-label">Impor Data</div>
+            <div class="settings-sub">Pulihkan dari file backup JSON</div>
+          </div>
+        </div>
+        <span class="settings-arrow">›</span>
+      </div>
+      <input type="file" id="import-file-input" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Kesehatan</div>
+      <div class="settings-item" onclick="toggleCycleFeature()">
+        <div class="settings-item-left">
+          <span class="settings-icon">🩸</span>
+          <div>
+            <div class="settings-label">Kalender Siklus</div>
+            <div class="settings-sub">Opsional — catat & prediksi siklus</div>
+          </div>
+        </div>
+        <div class="toggle-switch" id="cycle-toggle-switch"><div class="toggle-knob"></div></div>
+      </div>
+      <div id="cycle-settings-panel" style="display:none;padding:0.4rem 0.9rem 0.2rem;font-size:0.78rem;color:var(--text-muted);">📍 Kalender & catatan siklus bisa diisi di halaman Beranda.</div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Aplikasi</div>
+      <div class="settings-item" onclick="goToPage('achievements')">
+        <div class="settings-item-left">
+          <span class="settings-icon">🏆</span>
+          <div>
+            <div class="settings-label">Pencapaian</div>
+            <div class="settings-sub" id="settings-ach-sub">Lihat lencana kamu</div>
+          </div>
+        </div>
+        <span class="settings-arrow">›</span>
+      </div>
+      <div class="settings-item" onclick="showAbout()">
+        <div class="settings-item-left">
+          <span class="settings-icon">🌊</span>
+          <div>
+            <div class="settings-label">Tentang Serenia</div>
+            <div class="settings-sub">v2.0 — Jurnal harianmu</div>
+          </div>
+        </div>
+        <span class="settings-arrow">›</span>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Bahaya</div>
+      <div class="settings-item" onclick="clearAllData()" style="border-color:#fdd5db;">
+        <div class="settings-item-left">
+          <span class="settings-icon">🗑️</span>
+          <div>
+            <div class="settings-label" style="color:#c0394a;">Hapus Semua Data</div>
+            <div class="settings-sub">Hapus jurnal & mood permanen</div>
+          </div>
+        </div>
+        <span class="settings-arrow" style="color:#c0394a;">›</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" style="background:linear-gradient(135deg,var(--rose),#e05572);box-shadow:0 4px 16px rgba(192,57,74,0.3);" onclick="doLogout()">
+      Keluar dari Akun 👋
+    </button>
+  </div>
+
+  <!-- HABITS PAGE -->
+  <div class="page" id="page-habits">
+    <!-- Hero -->
+    <div class="habits-hero">
+      <h2>📋 Habit Tracker</h2>
+      <p>Bangun kebiasaan kecil yang membawa perubahan besar 🌱</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="habit-stats-grid" id="habit-stats-grid">
+      <div class="habit-stat-card">
+        <div class="habit-stat-num" id="hstat-active">0</div>
+        <div class="habit-stat-label">Habit Aktif</div>
+      </div>
+      <div class="habit-stat-card">
+        <div class="habit-stat-num" id="hstat-done">0</div>
+        <div class="habit-stat-label">Selesai Hari Ini</div>
+      </div>
+      <div class="habit-stat-card">
+        <div class="habit-stat-num" id="hstat-weekly">0%</div>
+        <div class="habit-stat-label">Rata-rata Mingguan</div>
+      </div>
+      <div class="habit-stat-card">
+        <div class="habit-stat-num" id="hstat-maxstreak">0🔥</div>
+        <div class="habit-stat-label">Streak Tertinggi</div>
+      </div>
+    </div>
+
+    <!-- Weekly Progress Card -->
+    <div class="habit-weekly-card">
+      <div class="habit-weekly-title">📊 Progress Minggu Ini</div>
+      <div class="habit-progress-bar-wrap">
+        <div class="habit-progress-bar-fill" id="habit-week-bar" style="width:0%"></div>
+      </div>
+      <div class="habit-progress-pct" id="habit-week-pct">0%</div>
+      <div class="habit-week-days" id="habit-week-days"></div>
+    </div>
+
+    <!-- Habits List -->
+    <div class="habits-section-row">
+      <div class="habits-section-title">✅ Habit Harian</div>
+      <button class="btn-add-habit" onclick="openHabitModal()">➕ Tambah Habit</button>
+    </div>
+    <div id="habits-list"></div>
+
+    <!-- Monthly Overview -->
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title">📅 Ringkasan Bulan Ini</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.75rem;" id="habit-month-label"></div>
+      <div class="habit-monthly-grid" id="habit-monthly-grid"></div>
+      <div style="display:flex;gap:1rem;margin-top:0.75rem;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-muted);">
+          <div style="width:12px;height:12px;border-radius:3px;background:var(--ocean);"></div> Semua selesai
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-muted);">
+          <div style="width:12px;height:12px;border-radius:3px;background:var(--sky-mid);"></div> Sebagian
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-muted);">
+          <div style="width:12px;height:12px;border-radius:3px;background:var(--cream);border:1px solid var(--border);"></div> Belum
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end app-screen -->
+
+<!-- HABIT MODAL -->
+<div class="modal-overlay" id="habit-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeHabitModal()" aria-label="Tutup">✕</button>
+    <div class="modal-title" id="habit-modal-title">➕ Tambah Habit Baru</div>
+    <div class="habit-modal-form">
+      <input type="hidden" id="habit-edit-id">
+      <div class="form-group">
+        <label class="form-label" for="habit-name-input">Nama Habit</label>
+        <input class="form-input" type="text" id="habit-name-input" placeholder="Contoh: Minum Air...">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="emoji-picker-label">Pilih Emoji</label>
+        <div class="emoji-picker" id="emoji-picker" role="group" aria-labelledby="emoji-picker-label"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="habit-category-select">Kategori</label>
+        <select class="category-select" id="habit-category-select">
+          <option value="Health">❤️ Health</option>
+          <option value="Mindfulness">🧘 Mindfulness</option>
+          <option value="Productivity">🎯 Productivity</option>
+          <option value="Self Care">🌸 Self Care</option>
+          <option value="Learning">📚 Learning</option>
+        </select>
+      </div>
+      <div class="habit-modal-btns">
+        <button class="btn-primary" style="flex:1;" onclick="saveHabitFromModal()">💾 Simpan</button>
+        <button class="btn-cancel-habit" onclick="closeHabitModal()">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottom-nav" style="display:none;" aria-label="Navigasi utama">
+  <button class="nav-item active" onclick="goToPage('home')" id="nav-home" aria-current="page">
+    <span class="nav-icon">🏠</span><span class="nav-label">Beranda</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('mood')" id="nav-mood">
+    <span class="nav-icon">🌈</span><span class="nav-label">Mood</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('journal')" id="nav-journal">
+    <span class="nav-icon">📖</span><span class="nav-label">Jurnal</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('calendar')" id="nav-calendar">
+    <span class="nav-icon">📅</span><span class="nav-label">Kalender</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('pet')" id="nav-pet">
+    <span class="nav-icon">🐾</span><span class="nav-label">Teman</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('achievements')" id="nav-achievements">
+    <span class="nav-icon">🏆</span><span class="nav-label">Lencana</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('habits')" id="nav-habits">
+    <span class="nav-icon">✅</span><span class="nav-label">Habit</span>
+  </button>
+  <button class="nav-item" onclick="goToPage('settings')" id="nav-settings">
+    <span class="nav-icon">⚙️</span><span class="nav-label">Atur</span>
+  </button>
+</nav>
+
+<script src="app.js"></script>
+<script src="habits.js"></script>
+<script src="reflection.js"></script>
+
+<!-- ====================== FIREBASE MODULE ====================== -->
+<!-- Script ini HARUS type="module" agar bisa import dari firebase.js -->
+<script type="module" src="firebase-bridge.js"></script>
+</body>
+</html>
