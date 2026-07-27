@@ -252,8 +252,7 @@ async function doGoogleLogin(btnId) {
     return;
   }
   if (btnId) setButtonLoading(btnId, true, 'Mengalihkan ke Google...');
-  showToast('🔵 Mulai redirect ke Google...');   // ← TAMBAHIN INI
-  try {
+  showToast('🔵 Mulai redirect ke Google...');
   try {
     // signInWithRedirect: halaman akan dialihkan sepenuhnya ke Google di sini.
     // Hasil login-nya BUKAN didapat lewat baris berikutnya, tapi dicek ulang
