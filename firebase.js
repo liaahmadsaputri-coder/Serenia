@@ -204,8 +204,11 @@ export async function loadFromFirestore(uid) {
       console.log("ℹ️ Firestore: belum ada data untuk uid:", uid, "(akan dibuat saat pertama save)");
       return null;
     }
-  } catch (err) {
-    console.warn("⚠️ Firestore load gagal. Menggunakan localStorage sebagai fallback.", err);
+} catch (err) {
+    console.warn('⚠️ Gagal memproses hasil login Google:', err);
+    if (typeof showToast === 'function') {
+      showToast('❌ Redirect error: ' + (err.code || err.message || String(err)));
+    }
     return null;
   }
 }
