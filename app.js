@@ -252,6 +252,8 @@ async function doGoogleLogin(btnId) {
     return;
   }
   if (btnId) setButtonLoading(btnId, true, 'Mengalihkan ke Google...');
+  showToast('🔵 Mulai redirect ke Google...');   // ← TAMBAHIN INI
+  try {
   try {
     // signInWithRedirect: halaman akan dialihkan sepenuhnya ke Google di sini.
     // Hasil login-nya BUKAN didapat lewat baris berikutnya, tapi dicek ulang
@@ -1532,6 +1534,7 @@ function showToast(msg) {
 window.addEventListener('load', ()=>{
   setTimeout(async ()=>{
     document.getElementById('loading-screen').classList.add('hidden');
+    showToast('🟢 App dimuat ulang, cek status Google...');   // ← BARIS BARU 1
 
     // Cek dulu: apakah user baru saja kembali dari proses login Google (redirect)?
     // Ini harus dicek SEBELUM sesi lokal biasa, karena setelah redirect balik,
@@ -1542,6 +1545,8 @@ window.addEventListener('load', ()=>{
         if (gUser) {
           completeGoogleLogin(gUser);
           return; // sesi baru dari Google login, tidak perlu cek sesi lokal lagi
+        } else {
+          showToast('⚪ Redirect result kosong (null)');   // ← BARIS BARU 2
         }
       } catch (e) {
         console.error('❌ Gagal memproses hasil login Google:', e);
