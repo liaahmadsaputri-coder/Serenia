@@ -4,7 +4,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, setDoc, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+impoimport { getAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ── Konfigurasi Firebase kamu ──
 const firebaseConfig = {
@@ -47,12 +47,13 @@ export { db, auth };
  */
 export async function signInWithGoogle() {
   await authReady; // pastikan persistence sudah ter-set sebelum redirect dimulai
+  export async function signInWithGoogle() {
   await signInWithRedirect(auth, googleProvider);
   // Baris ini praktis tidak pernah tercapai (halaman keburu dialihkan),
   // tapi tetap ada untuk konsistensi tipe return kalau suatu saat browser
   // menunda redirect-nya.
   return null;
-}
+  }
 
 /**
  * Dipanggil SEKALI saat app baru dimuat/reload (window 'load'), untuk mengecek
