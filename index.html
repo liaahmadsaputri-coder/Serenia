@@ -318,16 +318,7 @@
     <div id="home-cycle-card" style="display:none;"></div>
 
     <!-- NEXT ACHIEVEMENT PROGRESS -->
-    <div class="progress-section">
-      <div class="card-title">🏆 Pencapaian Berikutnya</div>
-      <div class="next-achievement-label">Menuju:</div>
-      <div class="next-achievement-name" id="next-ach-name">—</div>
-      <div class="main-progress-bar">
-        <div class="main-progress-fill" id="next-ach-bar" style="width:0%"></div>
-      </div>
-      <div class="main-progress-text" id="next-ach-text">—</div>
-    </div>
-
+    <div class="progress-section" onclick="goToPage('achievements')" role="button" tabindex="0" aria-label="Buka Lencana Pencapaian" style="cursor:pointer;">
     <div class="card">
       <div class="card-title">🌤️ Bagaimana perasaanmu hari ini?</div>
       <div class="mood-grid" id="home-mood-grid">
@@ -337,7 +328,6 @@
         <button class="mood-btn" onclick="selectMoodHome('😔','Sedih')" data-mood="😔"><span class="mood-em">😔</span><span class="mood-name">Sedih</span></button>
         <button class="mood-btn" onclick="selectMoodHome('😤','Kesal')" data-mood="😤"><span class="mood-em">😤</span><span class="mood-name">Kesal</span></button>
       </div>
-    </div>
 
     <div class="card" style="border-left:4px solid var(--sky);">
       <div class="card-title">✍️ Mulai Jurnal Hari Ini</div>
@@ -352,6 +342,10 @@
 
     <div class="card">
       <div class="card-title">🐾 Temanmu Hari Ini</div>
+        <div class="card refl-entry-card" onclick="goToPage('habits')" role="button" tabindex="0" aria-label="Buka Habit Tracker" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToPage('habits')}">
+      <div class="card-title">✅ Habit Tracker</div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0;">Bangun kebiasaan kecil setiap hari 🌱</p>
+        </div>
       <div style="display:flex;align-items:center;gap:1rem;">
         <div style="font-size:3.2rem;cursor:pointer;transition:var(--transition);" onclick="goToPage('pet')" id="home-pet-display" onmouseover="this.style.transform='scale(1.1) rotate(-5deg)'" onmouseout="this.style.transform='scale(1)'">🐱</div>
         <div>
@@ -487,7 +481,7 @@ Kamu bisa menceritakan:
 
   <!-- CALENDAR PAGE -->
   <div class="page" id="page-calendar">
-    <div class="page-title">📅 Kalender Serenia</div>
+       <div class="page-title"><span onclick="goToPage('journal')" style="cursor:pointer;">←</span> 📅 Kalender Serenia</div>
 
     <div class="card">
       <div class="calendar-header">
@@ -502,6 +496,16 @@ Kamu bisa menceritakan:
       <div class="modal-title" id="cal-selected-date"></div>
       <div id="cal-selected-content"></div>
     </div>
+         <div class="journal-entries">
+      <div class="card-title" style="margin-bottom:0.75rem;">📚 Entri Tersimpan</div>
+      <div id="entries-list"></div>
+    </div>
+
+    <div class="card refl-entry-card" onclick="goToPage('calendar')" role="button" tabindex="0" aria-label="Buka Kalender" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToPage('calendar')}">
+      <div class="card-title">📅 Lihat Kalender</div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0;">Lihat jurnal & mood kamu dalam tampilan kalender</p>
+    </div>
+  </div>
 
     <div class="card">
       <div class="card-title">📊 Aktivitas Bulan Ini</div>
@@ -558,7 +562,7 @@ Kamu bisa menceritakan:
 
   <!-- ACHIEVEMENTS PAGE -->
   <div class="page" id="page-achievements">
-    <div class="page-title">🏆 Pencapaian</div>
+       <div class="page-title"><span onclick="goToPage('home')" style="cursor:pointer;">←</span> 🏆 Pencapaian</div>
 
     <div class="card" style="background:linear-gradient(135deg,var(--sun-light),white);border-color:var(--sun);">
       <div class="card-title">🔥 Streak Jurnal</div>
@@ -686,7 +690,7 @@ Kamu bisa menceritakan:
   <div class="page" id="page-habits">
     <!-- Hero -->
     <div class="habits-hero">
-      <h2>📋 Habit Tracker</h2>
+          <h2><span onclick="goToPage('home')" style="cursor:pointer;">←</span> 📋 Habit Tracker</h2>
       <p>Bangun kebiasaan kecil yang membawa perubahan besar 🌱</p>
     </div>
 
@@ -792,17 +796,8 @@ Kamu bisa menceritakan:
   <button class="nav-item" onclick="goToPage('journal')" id="nav-journal">
     <span class="nav-icon">📖</span><span class="nav-label">Jurnal</span>
   </button>
-  <button class="nav-item" onclick="goToPage('calendar')" id="nav-calendar">
-    <span class="nav-icon">📅</span><span class="nav-label">Kalender</span>
-  </button>
   <button class="nav-item" onclick="goToPage('pet')" id="nav-pet">
     <span class="nav-icon">🐾</span><span class="nav-label">Teman</span>
-  </button>
-  <button class="nav-item" onclick="goToPage('achievements')" id="nav-achievements">
-    <span class="nav-icon">🏆</span><span class="nav-label">Lencana</span>
-  </button>
-  <button class="nav-item" onclick="goToPage('habits')" id="nav-habits">
-    <span class="nav-icon">✅</span><span class="nav-label">Habit</span>
   </button>
   <button class="nav-item" onclick="goToPage('settings')" id="nav-settings">
     <span class="nav-icon">⚙️</span><span class="nav-label">Atur</span>
