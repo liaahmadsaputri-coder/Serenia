@@ -254,10 +254,8 @@ async function doGoogleLogin(btnId) {
   if (btnId) setButtonLoading(btnId, true, 'Mengalihkan ke Google...');
   showToast('🔵 Mulai redirect ke Google...');
   try {
-    // signInWithRedirect: halaman akan dialihkan sepenuhnya ke Google di sini.
-    // Hasil login-nya BUKAN didapat lewat baris berikutnya, tapi dicek ulang
-    // lewat window._checkGoogleRedirect() saat app dimuat lagi (lihat INIT).
-    await window._googleSignIn();
+    const gUser = await window._googleSignIn();
+    if (gUser) completeGoogleLogin(gUser);
   } catch (err) {
     console.error('Google sign-in error:', err);
     showToast('❌ Login Google gagal, coba lagi');
